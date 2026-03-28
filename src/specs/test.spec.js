@@ -50,10 +50,15 @@ describe("UC-1 Checkout Flow", ()=> {
     });
 });
 
-// UC-2 Data Driven Login:
+describe("UC-2 Data Driven Login:", () => {
+  // Use a Data Provider to test login with:
 
-// Use a Data Provider to test login with:
-
-// 1. standard_user (Should pass).
-
-// 2. locked_out_user (Should fail with specific error message).
+    it("standard_user (Should pass)", async () => {
+        console.log("standard_user (Should pass)");
+    })
+    
+    it("locked_out_user (Should fail with specific error message)", () => {
+        
+        console.log("locked_out_user (Should fail with specific error message)");
+    })
+});
