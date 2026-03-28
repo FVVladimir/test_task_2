@@ -22,9 +22,9 @@ describe("UC-1 Checkout Flow", ()=> {
 
     it("Login with standard_user", async ()=> {      
         const window =  $(".login_wrapper-inner");
-        const username;
-        const passWord;
-        const loginButton;
+        const username = $("#user-input");
+        const passWord = $("#password");
+        const loginButton = $("#login-button");
         await expect(browser).toHaveTitle("Swag Labs");
         await expect(window).toBeDisplayed();
     });
