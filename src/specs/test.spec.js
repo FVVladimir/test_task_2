@@ -14,33 +14,39 @@
 
 
 
-describe("UC-1 Checkout Flow", ()=> {
+describe("Final task", ()=> {
        
     beforeEach(async ()=> {
         await browser.url("https://www.saucedemo.com/")
     });
 
-    it("Login with standard_user", async ()=> {      
-        const window =  $(".login_wrapper-inner");
-        const username = $("#user-input");
-        const passWord = $("#password");
-        const loginButton = $("#login-button");
+    it("UC-1  Checkout Flow", async ()=> { 
+        // Go to the page     
+        const window =  await $(".login_wrapper-inner");
+        const username = await $("#user-name");
+        const passWord = await $("#password");
+        const loginButton = await $("#login-button");
         await expect(browser).toHaveTitle("Swag Labs");
         await expect(window).toBeDisplayed();
-    });
+        // Login with standard_user
+        await username.setValue("standard_user");
+        await passWord.setValue("secret_sauce");
+        await loginButton.click();
+        // Add a specific product to the cart (parametrize the product name, e.g., 'Sauce Labs Backpack'
+        const productName = await $("#item_0_title_link").getText();
+        await $("#add-to-cart-sauce-labs-bike-light").click();
+        // Navigate to the Cart and validate the item is present
+        await $(".shopping_cart_link").click();
+          console.log(productName, "====== i am here ========")
+          const productNameInCart = await $(".cart_item .cart_item_label  #item_0_title_link").getText();
+          console.log(productNameInCart, "====== i am here again ========");
+          await expect(productName).toEqual(productNameInCart);
+        //   Proceed to Checkout
+          const checkoutButton = await $("#checkout").click();
 
-    it("Add a specific product to the cart (parametrize the product name, e.g., 'Sauce Labs Backpack'", async ()=> {
-        console.log("i am a second step")
-    });
+    });    
 
-    it("Navigate to the Cart and validate the item is present", async ()=> {
-        console.log("i am a therd step")
-    });
-
-    it("Proceed to Checkout", async ()=> {
-        console.log("i am a fourth step")
-    });
-
+    
     it("Fill in the Information form (First Name, Last Name, Zip)", async ()=> {
         console.log("i am a fifth step")
     });
@@ -50,15 +56,13 @@ describe("UC-1 Checkout Flow", ()=> {
     });
 });
 
-describe("UC-2 Data Driven Login:", () => {
-  // Use a Data Provider to test login with:
+describe("UC-2 Data Driven Login:", () => {  
 
     it("standard_user (Should pass)", async () => {
         console.log("standard_user (Should pass)");
     })
     
-    it("locked_out_user (Should fail with specific error message)", () => {
-        
+    it("locked_out_user (Should fail with specific error message)", async () => {        
         console.log("locked_out_user (Should fail with specific error message)");
     })
 });
