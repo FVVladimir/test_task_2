@@ -60,11 +60,11 @@ describe("Final task", ()=> {
 
     }); 
     
-    it("   UC-2 Data Driven Login: standard_user (Should pass)", async () => {
-        console.log("standard_user (Should pass)");
-    })
-    
-    it("locked_out_user (Should fail with specific error message)", async () => {        
-        console.log("locked_out_user (Should fail with specific error message)");
-    })
+    it("   UC-2 Data Driven Login: ", async () => {
+
+        // standard_user (Should pass)
+
+        // locked_out_user (Should fail with specific error message)
+       
+    });    
 });
