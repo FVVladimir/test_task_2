@@ -23,9 +23,9 @@ describe("Final task", ()=> {
     });
 
     afterEach(async ()=> {
-      await browser.url("https://www.saucedemo.com/");
-      const username = await $("#user-name").setValue("");
-      const passWord = await $("#password").setValue("");
+      await loginPage.open();
+      await loginPage.userNameField.setValue("");
+      await loginPage.passwordField.setValue("");
     });
 
     it("UC-1  Checkout Flow", async ()=> { 
