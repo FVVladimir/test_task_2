@@ -41,24 +41,26 @@ describe("Final task", ()=> {
           const productNameInCart = await $(".cart_item .cart_item_label  #item_0_title_link").getText();
           console.log(productNameInCart, "====== i am here again ========");
           await expect(productName).toEqual(productNameInCart);
-        //   Proceed to Checkout
+         // Proceed to Checkout
           const checkoutButton = await $("#checkout").click();
+         // Fill in the Information form (First Name, Last Name, Zip)
+           const checkoutFirstName = await $("#first-name");
+            const checkoutLastName = await $("#last-name");
+             const checkoutZipCode = await $("#postal-code");
+              
+               await checkoutFirstName.setValue("Jhon");
+                await checkoutLastName.setValue("Doe");
+                 await checkoutZipCode.setValue("106");
 
-    });    
+              const checkoutButtonContinue = await $("#continue").click();
+         // Complete the checkout and validate the success message: 'Thank you for your order!'     
+           const buttonFinish = await $("#finish").click();
+             const messege = await $(".complete-header").getText();
+              await expect(messege).toEqual("Thank you for your order!");       
 
+    }); 
     
-    it("Fill in the Information form (First Name, Last Name, Zip)", async ()=> {
-        console.log("i am a fifth step")
-    });
-
-    it("Complete the checkout and validate the success message: 'Thank you for your order!'", async ()=> {
-        console.log("i am a sixth step")
-    });
-});
-
-describe("UC-2 Data Driven Login:", () => {  
-
-    it("standard_user (Should pass)", async () => {
+    it("   UC-2 Data Driven Login: standard_user (Should pass)", async () => {
         console.log("standard_user (Should pass)");
     })
     
