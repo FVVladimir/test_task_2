@@ -158,8 +158,14 @@ exports.config = {
      * @param {object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function () {
+        const fs = require('fs');
+        const path = './allure-results';
+    
+        if (fs.existsSync(path)) {
+            fs.rmSync(path, { recursive: true, force: true });
+        }
+    },
     /**
      * Gets executed before a worker process is spawned and can be used to initialize specific service
      * for that worker as well as modify runtime environments in an async fashion.
