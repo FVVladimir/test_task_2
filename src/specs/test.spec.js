@@ -12,12 +12,14 @@
 
 // Documentation: Add a README.md explaining how to run the tests and generate the report.
 
+const LoginPage = require("./../po/pages/login.page");
 
+const loginPage = new LoginPage();
 
 describe("Final task", ()=> {
        
     beforeEach(async ()=> {
-        await browser.url("https://www.saucedemo.com/");
+        await loginPage.open();
     });
 
     afterEach(async ()=> {
