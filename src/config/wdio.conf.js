@@ -166,7 +166,7 @@ exports.config = {
         folders.forEach(folder => {
             if (fs.existsSync(folder)) {
                 fs.rmSync(folder, { recursive: true, force: true });
-                console.log(`🧹 Очищено: ${folder}`);
+                console.log(`🧹 Видалено: ${folder}`);
             }
         });
     },

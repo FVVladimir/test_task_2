@@ -17,7 +17,13 @@
 describe("Final task", ()=> {
        
     beforeEach(async ()=> {
-        await browser.url("https://www.saucedemo.com/")
+        await browser.url("https://www.saucedemo.com/");
+    });
+
+    afterEach(async ()=> {
+      await browser.url("https://www.saucedemo.com/");
+      const username = await $("#user-name").setValue("");
+      const passWord = await $("#password").setValue("");
     });
 
     it("UC-1  Checkout Flow", async ()=> { 
@@ -60,11 +66,21 @@ describe("Final task", ()=> {
 
     }); 
     
-    it("   UC-2 Data Driven Login: ", async () => {
+    it("UC-2 Data Driven Login: standard_user (Should pass) ", async () => {          
+        await expect(browser).toHaveTitle("Swag Labs");
+        const window =  await $(".login_wrapper-inner");   
+         await expect(window).toBeDisplayed();
+         await $("#user-name").setValue("standard_user");
+         await $("#password").setValue("secret_sauce");
+         await $("#login-button").click();        
+    });
 
-        // standard_user (Should pass)
-
-        // locked_out_user (Should fail with specific error message)
-       
-    });    
+    it("UC-2 Data Driven Login: locked_out_user (Should fail with specific error message)", async () => {
+      await $("#user-name").setValue("locked_out_user");
+      await $("#password").setValue("secret_sauce");
+      await $("#login-button").click();
+      const errorMessage = await $(".error h3").getText();
+      console.log(errorMessage, "<<<<<==================");
+      await expect(errorMessage).toEqual("Epic sadface: Sorry, this user has been locked out.");
+    });
 });
