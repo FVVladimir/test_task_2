@@ -160,11 +160,15 @@ exports.config = {
      */
     onPrepare: function () {
         const fs = require('fs');
-        const path = './allure-results';
     
-        if (fs.existsSync(path)) {
-            fs.rmSync(path, { recursive: true, force: true });
-        }
+        const folders = ['./allure-results', './allure-report'];
+    
+        folders.forEach(folder => {
+            if (fs.existsSync(folder)) {
+                fs.rmSync(folder, { recursive: true, force: true });
+                console.log(`🧹 Очищено: ${folder}`);
+            }
+        });
     },
     /**
      * Gets executed before a worker process is spawned and can be used to initialize specific service
