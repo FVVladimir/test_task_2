@@ -29,29 +29,30 @@ describe("Final task", ()=> {
     });
 
     it("UC-1  Checkout Flow", async ()=> { 
-        // Go to the page     
-        const window =  await $(".login_wrapper-inner");
-        const username = await $("#user-name");
-        const passWord = await $("#password");
-        const loginButton = await $("#login-button");
+        // Go to the page      
         await expect(browser).toHaveTitle("Swag Labs");
-        await expect(window).toBeDisplayed();
+        await expect(loginPage.formForLogIn).toBeDisplayed();
+       
         // Login with standard_user
-        await username.setValue("standard_user");
-        await passWord.setValue("secret_sauce");
-        await loginButton.click();
+        await loginPage.userNameField.setValue("standard_user");
+        await loginPage.passwordField.setValue("secret_sauce");
+        await loginPage.logInButton.click();
+        
         // Add a specific product to the cart (parametrize the product name, e.g., 'Sauce Labs Backpack'
         const productName = await $("#item_0_title_link").getText();
         await $("#add-to-cart-sauce-labs-bike-light").click();
+        
         // Navigate to the Cart and validate the item is present
         await $(".shopping_cart_link").click();
           console.log(productName, "====== i am here ========")
           const productNameInCart = await $(".cart_item .cart_item_label  #item_0_title_link").getText();
           console.log(productNameInCart, "====== i am here again ========");
           await expect(productName).toEqual(productNameInCart);
-         // Proceed to Checkout
+         
+          // Proceed to Checkout
           const checkoutButton = await $("#checkout").click();
-         // Fill in the Information form (First Name, Last Name, Zip)
+         
+          // Fill in the Information form (First Name, Last Name, Zip)
            const checkoutFirstName = await $("#first-name");
             const checkoutLastName = await $("#last-name");
              const checkoutZipCode = await $("#postal-code");
