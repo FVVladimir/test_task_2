@@ -62,7 +62,8 @@ describe("Final task", ()=> {
                  await checkoutZipCode.setValue("106");
 
               const checkoutButtonContinue = await $("#continue").click();
-         // Complete the checkout and validate the success message: 'Thank you for your order!'     
+         
+              // Complete the checkout and validate the success message: 'Thank you for your order!'     
            const buttonFinish = await $("#finish").click();
              const messege = await $(".complete-header").getText();
               await expect(messege).toEqual("Thank you for your order!");       
