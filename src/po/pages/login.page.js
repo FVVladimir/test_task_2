@@ -23,3 +23,24 @@ class LoginPage {
 };
 
 module.exports = LoginPage;
+ 
+/* 
+@param { userName | password }
+@return {*}
+
+
+input(param) {
+     
+const fields = {
+       
+           userName: "#user-name",
+           password: "#password",
+           loginButton: "#login-button",
+           clickButton {
+              return this.LoginButton.click()
+           };
+         };
+
+      return  $(".login_wrapper-inner" ${fields[param.toLowerCase()]});  
+         
+*/

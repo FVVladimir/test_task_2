@@ -1,5 +1,5 @@
-class Header {
+class HeaderComponent {
 
 };
 
-module.exports = Header;
+module.exports = HeaderComponent;
