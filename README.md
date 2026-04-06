@@ -1,6 +1,6 @@
 for run test: 
 fork repo on your lockal machine
-you should have instoll:
+you should have install:
         - noda letest version;
         -code editor (vscode or sth like that)
 open terminal:        
