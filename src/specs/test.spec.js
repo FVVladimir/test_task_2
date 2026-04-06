@@ -12,9 +12,15 @@
 
 // Documentation: Add a README.md explaining how to run the tests and generate the report.
 
-const LoginPage = require("./../po/pages/login.page");
+const LoginPage = require("../po/pages/login.page");
+const HeaderComponent = require("../po/components/common/header.component");
+const MainPage = require("../po/pages/main.page");
+
+const { Title, Users } = require("../po/test-data/index");
 
 const loginPage = new LoginPage();
+const header = new HeaderComponent();
+const mainPage = new MainPage();
 
 describe("Final task", ()=> {
        
@@ -29,25 +35,25 @@ describe("Final task", ()=> {
     });
 
     it("UC-1  Checkout Flow", async ()=> { 
-        // Go to the page      
-        await expect(browser).toHaveTitle("Swag Labs");
+        // Go to the page         
+        await expect(browser).toHaveTitle(Title.mainTitle);
         await expect(loginPage.formForLogIn).toBeDisplayed();
        
         // Login with standard_user
-        await loginPage.userNameField.setValue("standard_user");
-        await loginPage.passwordField.setValue("secret_sauce");
+        await loginPage.userNameField.setValue(Users.validUserName);
+        await loginPage.passwordField.setValue(Users.validUserPassword);
         await loginPage.logInButton.click();
         
         // Add a specific product to the cart (parametrize the product name, e.g., 'Sauce Labs Backpack'
-        const productName = await $("#item_0_title_link").getText();
+        const productName = await mainPage.product.getText();
         await $("#add-to-cart-sauce-labs-bike-light").click();
         
         // Navigate to the Cart and validate the item is present
-        await $(".shopping_cart_link").click();
-          console.log(productName, "====== i am here ========")
-          const productNameInCart = await $(".cart_item .cart_item_label  #item_0_title_link").getText();
-          console.log(productNameInCart, "====== i am here again ========");
-          await expect(productName).toEqual(productNameInCart);
+        await header.cardButton.click();
+         
+        const productNameInCart = await $(".cart_item .cart_item_label  #item_0_title_link").getText();
+      
+        await expect(productName).toEqual(productNameInCart);
          
           // Proceed to Checkout
           const checkoutButton = await $("#checkout").click();
@@ -71,9 +77,10 @@ describe("Final task", ()=> {
     }); 
     
     it("UC-2 Data Driven Login: standard_user (Should pass) ", async () => {          
-        await expect(browser).toHaveTitle("Swag Labs");
-        const window =  await $(".login_wrapper-inner");   
-         await expect(window).toBeDisplayed();
+        
+         await expect(browser).toHaveTitle(Title.mainTitle);          
+         await expect(loginPage.formForLogIn).toBeDisplayed();
+         
          await $("#user-name").setValue("standard_user");
          await $("#password").setValue("secret_sauce");
          await $("#login-button").click();        
