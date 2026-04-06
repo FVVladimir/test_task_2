@@ -1,6 +1,6 @@
 class HeaderComponent {
 
-    get cardButton () {
+    get cartButton () {
       
         return $(".shopping_cart_link");
 

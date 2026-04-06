@@ -1,26 +1,28 @@
 // Technical Requirements:
 
-// Tool: WebDriverIO.
-
-// Browsers: Chrome, Edge (Run in Parallel).
-
-// Pattern: Page Object Model (POM).
-
-// Locators: CSS Selectors.
-
-// Reporting: Generate an Allure Report (or similar HTML report) for the test run.
-
-// Documentation: Add a README.md explaining how to run the tests and generate the report.
+  // Tool: WebDriverIO.
+  // Browsers: Chrome, Edge (Run in Parallel).
+  // Pattern: Page Object Model (POM).
+  // Locators: CSS Selectors.
+  // Reporting: Generate an Allure Report (or similar HTML report) for the test run.
+  // Documentation: Add a README.md explaining how to run the tests and generate the report.
 
 const LoginPage = require("../po/pages/login.page");
 const HeaderComponent = require("../po/components/common/header.component");
 const MainPage = require("../po/pages/main.page");
+const ProductCart = require("../po/components/productCart.component");
+const CartPage = require("../po/pages/cart.page");
+const CheckOutPage = require("../po/pages/checkout.page")
 
 const { Title, Users } = require("../po/test-data/index");
+
 
 const loginPage = new LoginPage();
 const header = new HeaderComponent();
 const mainPage = new MainPage();
+const productCart = new ProductCart();
+const cartPage = new CartPage();
+const checkout = new CheckOutPage();
 
 describe("Final task", ()=> {
        
@@ -30,8 +32,8 @@ describe("Final task", ()=> {
 
     afterEach(async ()=> {
       await loginPage.open();
-      await loginPage.userNameField.setValue("");
-      await loginPage.passwordField.setValue("");
+      await loginPage.userNameField.setValue(Users.clearField);
+      await loginPage.passwordField.setValue(Users.clearField);
     });
 
     it("UC-1  Checkout Flow", async ()=> { 
@@ -46,31 +48,24 @@ describe("Final task", ()=> {
         
         // Add a specific product to the cart (parametrize the product name, e.g., 'Sauce Labs Backpack'
         const productName = await mainPage.product.getText();
-        await $("#add-to-cart-sauce-labs-bike-light").click();
+        await productCart.buttonAddProductToCard.click();
         
         // Navigate to the Cart and validate the item is present
-        await header.cardButton.click();
+        await header.cartButton.click();     
+        await expect(productName).toEqual(await productCart.productNameInCart);
          
-        const productNameInCart = await $(".cart_item .cart_item_label  #item_0_title_link").getText();
-      
-        await expect(productName).toEqual(productNameInCart);
+        // Proceed to Checkout
+          const checkoutButton = await cartPage.checkoutButton.click();
          
-          // Proceed to Checkout
-          const checkoutButton = await $("#checkout").click();
-         
-          // Fill in the Information form (First Name, Last Name, Zip)
-           const checkoutFirstName = await $("#first-name");
-            const checkoutLastName = await $("#last-name");
-             const checkoutZipCode = await $("#postal-code");
-              
-               await checkoutFirstName.setValue("Jhon");
-                await checkoutLastName.setValue("Doe");
-                 await checkoutZipCode.setValue("106");
+        // Fill in the Information form (First Name, Last Name, Zip)              
+               await checkout.checkOutFieldFirstName.setValue(Users.checkOutUserFirstName);
+                await checkout.checkOutFieldLastName.setValue(Users.checkOutUserLastName);
+                 await checkout.checkOutFiedZipCode.setValue(Users.checkOutUserZipCode);
 
-              const checkoutButtonContinue = await $("#continue").click();
+                   await checkout.checkOutButtonContinue.click();
          
-              // Complete the checkout and validate the success message: 'Thank you for your order!'     
-           const buttonFinish = await $("#finish").click();
+        // Complete the checkout and validate the success message: 'Thank you for your order!'            
+            await checkout.checkOutButtonFinish.click();
              const messege = await $(".complete-header").getText();
               await expect(messege).toEqual("Thank you for your order!");       
 
