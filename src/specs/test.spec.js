@@ -63,9 +63,8 @@ describe("Final task", ()=> {
                    await checkout.checkOutButtonContinue.click();
          
         // Complete the checkout and validate the success message: 'Thank you for your order!'            
-            await checkout.checkOutButtonFinish.click();
-            //  const curentThankMessage = await $(".complete-header").getText();
-              await expect(await checkout.curentThankMessage.getText()).toEqual(Messages.validThankMessage);       
+            await checkout.checkOutButtonFinish.click();            
+            await expect(await checkout.curentThankMessage.getText()).toEqual(Messages.validThankMessage);       
 
     }); 
     
