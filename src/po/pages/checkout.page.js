@@ -20,6 +20,11 @@ class CheckOutPage {
 
         return $("#finish");
     };
+
+    get curentThankMessage () {
+
+        return $(".complete-header");
+    };
 };
 
 module.exports = CheckOutPage;

@@ -14,7 +14,7 @@ const ProductCart = require("../po/components/productCart.component");
 const CartPage = require("../po/pages/cart.page");
 const CheckOutPage = require("../po/pages/checkout.page")
 
-const { Title, Users } = require("../po/test-data/index");
+const { Title, Users, Messages, CheckOut } = require("../po/test-data/index");
 
 
 const loginPage = new LoginPage();
@@ -42,9 +42,7 @@ describe("Final task", ()=> {
         await expect(loginPage.formForLogIn).toBeDisplayed();
        
         // Login with standard_user
-        await loginPage.userNameField.setValue(Users.validUserName);
-        await loginPage.passwordField.setValue(Users.validUserPassword);
-        await loginPage.logInButton.click();
+        await loginPage.login(Users.validUserName, Users.validUserPassword);       
         
         // Add a specific product to the cart (parametrize the product name, e.g., 'Sauce Labs Backpack'
         const productName = await mainPage.product.getText();
@@ -55,19 +53,19 @@ describe("Final task", ()=> {
         await expect(productName).toEqual(await productCart.productNameInCart);
          
         // Proceed to Checkout
-          const checkoutButton = await cartPage.checkoutButton.click();
+        await cartPage.checkoutButton.click();
          
         // Fill in the Information form (First Name, Last Name, Zip)              
-               await checkout.checkOutFieldFirstName.setValue(Users.checkOutUserFirstName);
-                await checkout.checkOutFieldLastName.setValue(Users.checkOutUserLastName);
-                 await checkout.checkOutFiedZipCode.setValue(Users.checkOutUserZipCode);
+               await checkout.checkOutFieldFirstName.setValue(CheckOut.checkOutUserFirstName);
+                await checkout.checkOutFieldLastName.setValue(CheckOut.checkOutUserLastName);
+                 await checkout.checkOutFiedZipCode.setValue(CheckOut.checkOutUserZipCode);
 
                    await checkout.checkOutButtonContinue.click();
          
         // Complete the checkout and validate the success message: 'Thank you for your order!'            
             await checkout.checkOutButtonFinish.click();
-             const messege = await $(".complete-header").getText();
-              await expect(messege).toEqual("Thank you for your order!");       
+            //  const curentThankMessage = await $(".complete-header").getText();
+              await expect(await checkout.curentThankMessage.getText()).toEqual(Messages.validThankMessage);       
 
     }); 
     
@@ -76,17 +74,15 @@ describe("Final task", ()=> {
          await expect(browser).toHaveTitle(Title.mainTitle);          
          await expect(loginPage.formForLogIn).toBeDisplayed();
          
-         await $("#user-name").setValue("standard_user");
-         await $("#password").setValue("secret_sauce");
-         await $("#login-button").click();        
+         await loginPage.login(Users.validUserName, Users.validUserPassword);         
     });
 
     it("UC-2 Data Driven Login: locked_out_user (Should fail with specific error message)", async () => {
-      await $("#user-name").setValue("locked_out_user");
-      await $("#password").setValue("secret_sauce");
-      await $("#login-button").click();
-      const errorMessage = await $(".error h3").getText();
-      console.log(errorMessage, "<<<<<==================");
-      await expect(errorMessage).toEqual("Epic sadface: Sorry, this user has been locked out.");
+
+        await expect(browser).toHaveTitle(Title.mainTitle);          
+        await expect(loginPage.formForLogIn).toBeDisplayed();
+
+        await loginPage.login(Users.lockedUserName, Users.lockedUserPassword);          
+        await expect(await loginPage.curentErrorMessage.getText()).toEqual(Messages.validErrorMessage);
     });
 }); 

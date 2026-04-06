@@ -5,11 +5,7 @@ const Users = {
    validUserPassword: "secret_sauce",
    lockedUserName: "locked_out_user",
    lockedUserPassword: "secret_sauce",
-   clearField: "",
-   checkOutUserFirstName: "John",
-   checkOutUserLastName: "Dou",
-   checkOutUserZipCode: "106"
-
+   clearField: ""
 };
 
 module.exports = Users;
