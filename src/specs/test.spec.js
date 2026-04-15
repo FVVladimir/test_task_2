@@ -28,13 +28,12 @@ describe("Final task", ()=> {
        
     beforeEach(async ()=> {
         await loginPage.open();
-    });
 
-    afterEach(async ()=> {
-      await loginPage.open();
-      await loginPage.userNameField.setValue(Users.clearField);
-      await loginPage.passwordField.setValue(Users.clearField);
-    });
+    // afterEach(async ()=> {
+    //   await loginPage.open();
+    //   await loginPage.userNameField.setValue(Users.clearField);
+    //   await loginPage.passwordField.setValue(Users.clearField);
+    // });
 
     it("UC-1  Checkout Flow", async ()=> { 
         // Go to the page         
